@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CARRITO DE COMPRAS</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimun-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link th:href="@{/css/hoja.css}" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<table class="table">
+    <thead>
+    <tr>
+
+        <th scope="col">PRODUCTO</th>
+        <th scope="col">CANTIDAD</th>
+        <th scope="col">PRECIO</th>
+        <th scope="col">IMPORTE</th>
+        <th scope="col">ESTADO</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="producto,indice : ${productos}">
+
+        <td th:text="${producto.nombre}"></td>
+        <td th:text="${pedidos[indice.index].cantidad}"></td>
+        <td th:text="${producto.precio}"></td>
+        <td th:text="${pedidos[indice.index].importe}"></td>
+        <td th:text="${pedidos[indice.index].estado}"></td>
+
+        <td> <input type="button" class="borrar" th:onclick="'borrarRegistroPedido(\'' + ${pedidos[indice.index].id} + '\');'"value="X" title="eliminar pedido del carrito"/> </td>
+    </tr>
+  <tr>
+      <td>TOTAL A PAGAR</td>
+      <td></td>
+      <td></td>
+
+      <td th:text="${total}"</td>
+  </tr>
+
+    </tbody>
+</table>
+<a href="http://localhost:8080/servicioPrueba/stock2"><--VOLVER A STOCK DE PRODUCTOS</a>
+<br>
+
+<button type="button" id="terminarCompra" class="btn btn-primary" onclick="terminarCompra()">TERMINAR COMPRA</button>
+
+</body>
+<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>
+</html>

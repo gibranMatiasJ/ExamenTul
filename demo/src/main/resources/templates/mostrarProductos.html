@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bienvenido</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimun-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link th:href="@{/css/hoja.css}" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div id='divProductos'>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+    <tr th:each="producto : ${productos}">
+        <td th:text="${producto.nombre}"></td>
+        <td th:text="${producto.descripcion}"></td>
+        <td th:text="${producto.precio}"></td>
+
+
+        <td> <input type="number" th:id="${producto.id}" name="tentacles"  min="1" max="10"></td>
+        <td>	<button type="button"   class="btn btn-primary" th:onclick="'agregarPedido(\'' + ${producto.id} + '\', $(\'#'+${producto.id} + '\').val());'">Añadir a carrito</button> </li></td>
+        <td><span th:if="${producto.tipo == true}">EN PROMOCION</span></td>
+        <td><input type="button" class="borrar" th:onclick="'borrarRegistroProducto(\'' + ${producto.id} + '\');'" value="X" title="eliminar producto"/></td>
+    </tr>
+        </tbody>
+    </table>
+    <button type="button" id='botonAgregarProducto' class="btn btn-primary" onclick='mostrarModal("mymodal2")'>Agregar producto</button>
+    <button type="button" id='botonVerCarrito' class="btn btn-primary" onclick='irACarrito()'>Ver carrito</button>
+
+</div>
+
+
+
+<div class="modal" id="mymodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">CARRITO</h5>
+                <button type="button" class="close" th:onclick="ocultarModal('mymodal')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>PRODUCTO AÑADIDO AL CARRITO CORRECTAMENTE</p>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="irACarrito()">Check out</button>
+                <button type="button" class="btn btn-secondary" th:onclick="ocultarModal('mymodal')" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="mymodal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">AGREGAR PRODUCTO </h5>
+                <button type="button" class="close" th:onclick="ocultarModal('mymodal2')" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <label for="sku">sku:</label>
+                <input type="text" class="form-control" id="sku">
+                <label for="nombre">nombre:</label>
+                <input type="text" class="form-control" id="nombre">
+                <label for="desc">descripción:</label>
+                <input type="text" class="form-control" id="desc">
+                <label for="precio">precio:</label>
+                <input type="number" class="form-control" id="precio">
+
+                <label for="descuento">Descuento:</label>
+                <select name="descuento" id="descuento">
+                    <option value=true>si</option>
+                    <option value=false selected>no</option>
+
+                </select>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" th:onclick="agregarProducto($('#sku').val(),$('#nombre').val(),$('#desc').val(),$('#precio').val(),$('#descuento').val())">Agregar</button>
+                <button type="button" class="btn btn-secondary" th:onclick="ocultarModal('mymodal2')" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>
+
+</html>
